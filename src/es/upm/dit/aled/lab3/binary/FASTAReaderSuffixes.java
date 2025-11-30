@@ -93,6 +93,26 @@ public class FASTAReaderSuffixes extends FASTAReader {
 			if(index == pattern.length) {
 				resultados.add(posSuffix);
 				found = true;
+				int i = 1;
+				do {
+					index = 0;
+					posSuffix = this.suffixes[m-i].suffixIndex;
+					while(posSuffix+index < content.length && index < pattern.length && pattern[index] == content[posSuffix+index])
+						index++;
+					if(index == pattern.length)
+						resultados.add(posSuffix);
+					i++;
+				} while(index == pattern.length);
+				i = 1;
+				do {
+					index = 0;
+					posSuffix = this.suffixes[m+i].suffixIndex;
+					while(posSuffix+index < content.length && index < pattern.length && pattern[index] == content[posSuffix+index])
+						index++;
+					if(index == pattern.length)
+						resultados.add(posSuffix);
+					i++;
+				} while(index==pattern.length);
 			}
 			else {
 				if(pattern[index] < content[posSuffix+index])
@@ -102,9 +122,9 @@ public class FASTAReaderSuffixes extends FASTAReader {
 				index = 0;
 			}
 		}
-		return resultados;
-			
+		return resultados;		
 	}
+	
 
 	public static void main(String[] args) {
 		long t1 = System.nanoTime();
